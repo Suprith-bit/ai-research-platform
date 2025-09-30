@@ -278,26 +278,3 @@ This project was developed for the Akcero Software Hackathon. For questions or c
 3. Follow the established patterns
 4. Maintain code quality standards
 
-## 📄 License
-
-This project is developed for the Akcero Software Pvt. Ltd. Internship Recruitment Hackathon.
-
-## 🏅 Awards & Recognition
-
-**Target Achievements:**
-- 🥇 **Innovation Award**: Novel multi-agent research architecture
-- 🏆 **Technical Excellence**: Performance optimization and clean code
-- 🎯 **Practical Impact**: Real-world problem solving with measurable results
-
----
-
-## 📞 Contact
-
-**Team**: [Your Team Name]
-**Hackathon**: Akcero Software Pvt. Ltd. Internship Recruitment
-**Submission**: September 30, 2025
-**Email**: office@akerosoft.com
-
----
-
-*Built with ❤️ for the Akcero Software Hackathon 2025*
