@@ -21,13 +21,16 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 sys.path.append(os.path.join(current_dir, 'research_workspace'))
 
-# Import the enhanced research system
-from research_workspace.core.enhanced_research_engine import EnhancedResearchEngine
-from research_workspace.core.agent_collaboration import AgentCollaborationManager
-from research_workspace.agents import AVAILABLE_AGENTS
-
-# Import enhanced display functions
-from enhanced_display_functions import display_enhanced_research_results, generate_enhanced_pdf_report
+# Import the enhanced research system - use try/except for deployment compatibility
+try:
+    from research_workspace.core.enhanced_research_engine import EnhancedResearchEngine
+    from research_workspace.core.agent_collaboration import AgentCollaborationManager
+    from research_workspace.agents import AVAILABLE_AGENTS
+    from enhanced_display_functions import display_enhanced_research_results, generate_enhanced_pdf_report
+except ImportError as e:
+    st.error(f"Import error: {e}")
+    st.error("Please check that all required files are present in the repository.")
+    st.stop()
 
 # Page configuration
 st.set_page_config(
