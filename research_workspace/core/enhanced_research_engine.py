@@ -19,7 +19,7 @@ from collections import defaultdict
 import hashlib
 
 # Add paths for configuration
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../shared'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'shared'))
 from config import Config
 
 class QueryPlanner:
