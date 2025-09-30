@@ -974,51 +974,95 @@ def generate_markdown_report(result: Dict[str, Any], query: str, agents: List[st
     return "\n".join(report_lines)
 
 def render_sidebar():
-    """Render enhanced sidebar"""
-    with st.sidebar:
-        st.markdown("### 🔧 Workspace Controls")
+    """Render enhanced sidebar with error handling"""
+    try:
+        with st.sidebar:
+            st.markdown("### 🔧 Workspace Controls")
 
-        # Current session info
-        st.markdown(f"**Session:** {st.session_state.current_session_id[:8]}...")
+            # Current session info with safe access
+            try:
+                session_id = getattr(st.session_state, 'current_session_id', 'Unknown')
+                if session_id and len(session_id) >= 8:
+                    st.markdown(f"**Session:** {session_id[:8]}...")
+                else:
+                    st.markdown("**Session:** Starting...")
+            except:
+                st.markdown("**Session:** Starting...")
 
-        # Research history
-        st.markdown("#### 📜 Recent Research")
+            # Research history
+            st.markdown("#### 📜 Recent Research")
 
-        if st.session_state.research_history:
-            for idx, entry in enumerate(reversed(st.session_state.research_history[-3:])):
-                with st.expander(f"Query {len(st.session_state.research_history) - idx}"):
-                    st.markdown(f"**Query:** {entry['query'][:50]}...")
-                    # Handle enhanced_galileo agent display
-                    if entry.get('enhanced_mode'):
-                        st.markdown(f"**Agents:** Enhanced Research Engine (Planner + Scout + Analyst + Writer)")
-                    else:
-                        agent_names = []
-                        for agent_id in entry['agents']:
-                            if agent_id in AVAILABLE_AGENTS:
-                                agent_names.append(AVAILABLE_AGENTS[agent_id]['name'])
+            try:
+                research_history = getattr(st.session_state, 'research_history', [])
+                if research_history:
+                    for idx, entry in enumerate(reversed(research_history[-3:])):
+                        with st.expander(f"Query {len(research_history) - idx}"):
+                            st.markdown(f"**Query:** {entry.get('query', 'Unknown')[:50]}...")
+                            # Handle enhanced_galileo agent display
+                            if entry.get('enhanced_mode'):
+                                st.markdown(f"**Agents:** Enhanced Research Engine (Planner + Scout + Analyst + Writer)")
                             else:
-                                agent_names.append(agent_id.replace('_', ' ').title())
-                        st.markdown(f"**Agents:** {', '.join(agent_names)}")
-                    st.markdown(f"**Time:** {entry['timestamp'].strftime('%H:%M:%S')}")
-        else:
+                                try:
+                                    agent_names = []
+                                    for agent_id in entry.get('agents', []):
+                                        if 'AVAILABLE_AGENTS' in globals() and agent_id in AVAILABLE_AGENTS:
+                                            agent_names.append(AVAILABLE_AGENTS[agent_id]['name'])
+                                        else:
+                                            agent_names.append(agent_id.replace('_', ' ').title())
+                                    st.markdown(f"**Agents:** {', '.join(agent_names) if agent_names else 'None'}")
+                                except:
+                                    st.markdown(f"**Agents:** Unknown")
+
+                            try:
+                                timestamp = entry.get('timestamp')
+                                if hasattr(timestamp, 'strftime'):
+                                    st.markdown(f"**Time:** {timestamp.strftime('%H:%M:%S')}")
+                                else:
+                                    st.markdown(f"**Time:** {str(timestamp)}")
+                            except:
+                                st.markdown(f"**Time:** Unknown")
+                else:
+                    st.info("No research history yet")
+            except Exception as e:
+                st.warning("Research history unavailable")
+
+            # Quick actions
+            st.markdown("#### ⚡ Quick Actions")
+
+            if st.button("🆕 New Session"):
+                try:
+                    st.session_state.current_session_id = str(uuid.uuid4())
+                    st.session_state.selected_agents = []
+                    st.success("New session started!")
+                except:
+                    st.error("Failed to create new session")
+
+            if st.button("🧹 Clear Selection"):
+                try:
+                    st.session_state.selected_agents = []
+                    st.success("Agent selection cleared!")
+                except:
+                    st.error("Failed to clear selection")
+
+            # System stats
+            st.markdown("#### 📊 System Stats")
+            try:
+                available_agents = len(AVAILABLE_AGENTS) if 'AVAILABLE_AGENTS' in globals() else 7
+                research_count = len(getattr(st.session_state, 'research_history', []))
+                st.metric("Available Agents", available_agents)
+                st.metric("Research Sessions", research_count)
+            except:
+                st.metric("Available Agents", 7)
+                st.metric("Research Sessions", 0)
+
+    except Exception as e:
+        # Fallback minimal sidebar
+        with st.sidebar:
+            st.markdown("### 🔧 Workspace Controls")
+            st.info("Sidebar loading...")
+            st.markdown("**Session:** Initializing...")
+            st.markdown("#### 📜 Recent Research")
             st.info("No research history yet")
-
-        # Quick actions
-        st.markdown("#### ⚡ Quick Actions")
-
-        if st.button("🆕 New Session"):
-            st.session_state.current_session_id = str(uuid.uuid4())
-            st.session_state.selected_agents = []
-            st.success("New session started!")
-
-        if st.button("🧹 Clear Selection"):
-            st.session_state.selected_agents = []
-            st.success("Agent selection cleared!")
-
-        # System stats
-        st.markdown("#### 📊 System Stats")
-        st.metric("Available Agents", len(AVAILABLE_AGENTS))
-        st.metric("Research Sessions", len(st.session_state.research_history))
 
 def main():
     """Main application"""
