@@ -1,7 +1,7 @@
 # AI Research Platform 🤖📊
 
 > **Advanced AI-Powered Research Automation Platform**
-> Developed for Akcero Software Pvt. Ltd. Internship Recruitment Hackathon
+> Developed for Akcero Software Pvt. Ltd. Internship Recruitment Hackathon.
 
 [![Platform](https://img.shields.io/badge/Platform-Streamlit-red)](https://streamlit.io/)
 [![AI](https://img.shields.io/badge/AI-Google%20Gemini%202.5%20Flash-blue)](https://ai.google.dev/)
