@@ -104,7 +104,7 @@ st.markdown("""
 
     .workspace-subtitle {
         font-size: 1.4rem;
-        color: #8B949E;
+        color: #FFFFFF;
         margin-bottom: 2rem;
         text-align: center;
         font-weight: 300;
@@ -462,7 +462,7 @@ def execute_research(query: str, selected_agents: List[str], collaboration_mode:
 
         st.markdown(f"""
         <div style="margin: 1rem 0;">
-            <p style="color: #8B949E; text-align: center;">Agents working on your research:</p>
+            <p style="color: #FFFFFF; text-align: center;">Agents working on your research:</p>
             <div style="text-align: center;">{agent_pills}</div>
         </div>
         """, unsafe_allow_html=True)
