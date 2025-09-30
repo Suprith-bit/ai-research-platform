@@ -269,8 +269,72 @@ st.markdown("""
     header {visibility: hidden;}
 
     /* Sidebar */
-    .css-1d391kg {
-        background: linear-gradient(180deg, #21262D 0%, #161B22 100%);
+    .css-1d391kg, .stSidebar, .stSidebar > div, .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #21262D 0%, #161B22 100%) !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Sidebar text elements */
+    .stSidebar h1, .stSidebar h2, .stSidebar h3, .stSidebar h4, .stSidebar h5, .stSidebar h6 {
+        color: #FFFFFF !important;
+    }
+
+    .stSidebar p, .stSidebar div, .stSidebar span, .stSidebar label {
+        color: #FFFFFF !important;
+    }
+
+    .stSidebar .markdown-text-container {
+        color: #FFFFFF !important;
+    }
+
+    /* Sidebar specific elements */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #21262D 0%, #161B22 100%) !important;
+    }
+
+    section[data-testid="stSidebar"] * {
+        color: #FFFFFF !important;
+    }
+
+    /* Main content area text */
+    .main .block-container {
+        color: #FFFFFF !important;
+    }
+
+    /* All text elements in main content */
+    .main h1, .main h2, .main h3, .main h4, .main h5, .main h6 {
+        color: #FFFFFF !important;
+    }
+
+    .main p, .main div, .main span, .main label {
+        color: #FFFFFF !important;
+    }
+
+    .main .markdown-text-container {
+        color: #FFFFFF !important;
+    }
+
+    /* Streamlit elements text */
+    .stMarkdown, .stMarkdown p, .stMarkdown div {
+        color: #FFFFFF !important;
+    }
+
+    .stText, .stText p, .stText div {
+        color: #FFFFFF !important;
+    }
+
+    /* Agent selection text */
+    .element-container, .element-container p, .element-container div {
+        color: #FFFFFF !important;
+    }
+
+    /* Generic text fix for all elements */
+    [data-testid="stMarkdownContainer"] {
+        color: #FFFFFF !important;
+    }
+
+    [data-testid="stMarkdownContainer"] * {
+        color: #FFFFFF !important;
     }
 
     /* Collaboration log */
